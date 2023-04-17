@@ -1,0 +1,721 @@
+consumes:
+- application/json
+definitions:
+  model.CommentCreateRequest:
+    properties:
+      comment:
+        type: string
+    type: object
+  model.CommentUpdateRequest:
+    properties:
+      comment:
+        type: string
+    type: object
+  model.FailedResponse:
+    properties:
+      error:
+        type: string
+      meta:
+        $ref: '#/definitions/model.Meta'
+    type: object
+  model.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  model.PhotoRequest:
+    properties:
+      photo_url:
+        type: string
+      title:
+        type: string
+    type: object
+  model.SocialMediaCreateRequest:
+    properties:
+      name:
+        type: string
+      social_media_url:
+        type: string
+    type: object
+  model.SocialMediaUpdateRequest:
+    properties:
+      name:
+        type: string
+      social_media_url:
+        type: string
+    type: object
+  model.SuccessResponse:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/model.Meta'
+    type: object
+  model.UserLoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.UserRegisterRequest:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: |-
+    Final Project for Scalable Web Service with Golang DTS-FGA
+    by Yoga Budi Permana Putra. \n
+    NOTE : input Authorize button format : bearer YOURACCESSTOKEN
+  title: Mygram API
+  version: "1.0"
+paths:
+  /mygram/comments/{photo_id}:
+    post:
+      consumes:
+      - application/json
+      description: Post Comment on Photo
+      parameters:
+      - description: Photo ID
+        in: path
+        name: photo_id
+        required: true
+        type: string
+      - description: Comment Create Request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CommentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Post Comment on Photo
+      tags:
+      - Comment
+  /mygram/comments/delete/{comment_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Comment by input Social Media ID
+      parameters:
+      - description: insert your Comment ID
+        in: path
+        name: comment_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Delete Comment
+      tags:
+      - Comment
+  /mygram/comments/get/{comment_id}:
+    get:
+      consumes:
+      - application/json
+      description: Show single Comment by input Social Media ID
+      parameters:
+      - description: insert your Comment ID
+        in: path
+        name: comment_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get One Comment
+      tags:
+      - Comment
+  /mygram/comments/get/all:
+    get:
+      consumes:
+      - application/json
+      description: Show All Comment on MyGram
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get All Comment
+      tags:
+      - Comment
+  /mygram/comments/update/{comment_id}:
+    put:
+      consumes:
+      - application/json
+      description: Update single Comment by input Social Media ID
+      parameters:
+      - description: insert your Comment ID
+        in: path
+        name: comment_id
+        required: true
+        type: string
+      - description: Comment Update Request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CommentUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Update Comment
+      tags:
+      - Comment
+  /mygram/photos/create:
+    post:
+      consumes:
+      - application/json
+      description: Post a Photo on MyGram
+      parameters:
+      - description: Photo request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.PhotoRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Post a Photo on MyGram
+      tags:
+      - Photo
+  /mygram/photos/delete/{photo_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Photo by input Social Media ID
+      parameters:
+      - description: insert your Photo ID
+        in: path
+        name: photo_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Delete Photo
+      tags:
+      - Photo
+  /mygram/photos/get/{photo_id}:
+    get:
+      consumes:
+      - application/json
+      description: Show single Photo by input Social Media ID
+      parameters:
+      - description: photo_id
+        in: path
+        name: photo_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get One Photo
+      tags:
+      - Photo
+  /mygram/photos/get/all:
+    get:
+      consumes:
+      - application/json
+      description: Show All Photo on MyGram
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get All Photo
+      tags:
+      - Photo
+  /mygram/photos/update/{photo_id}:
+    put:
+      consumes:
+      - application/json
+      description: Update single Photo Title and URL by input Social Media ID
+      parameters:
+      - description: insert your photo id
+        in: path
+        name: photo_id
+        required: true
+        type: string
+      - description: Photo request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.PhotoRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Update Photo
+      tags:
+      - Photo
+  /mygram/social_media/:
+    post:
+      consumes:
+      - application/json
+      description: Add new social Media Account
+      parameters:
+      - description: Social Media request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.SocialMediaCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Create Social Media Account
+      tags:
+      - Social Media
+  /mygram/social_media/delete/{social_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete single Social Media Account by input Social Media ID
+      parameters:
+      - description: insert Social Media ID
+        in: path
+        name: social_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Delete Social Media Account
+      tags:
+      - Social Media
+  /mygram/social_media/get/{social_id}:
+    get:
+      consumes:
+      - application/json
+      description: Show single Social Media Account by input Social Media ID
+      parameters:
+      - description: insert Social Media ID
+        in: path
+        name: social_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get One Social Media Account
+      tags:
+      - Social Media
+  /mygram/social_media/get/all:
+    get:
+      consumes:
+      - application/json
+      description: Show All Social Media Account
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Get All Social Media
+      tags:
+      - Social Media
+  /mygram/social_media/update/{social_id}:
+    put:
+      consumes:
+      - application/json
+      description: Update single Social Media Account by input Social Media ID
+      parameters:
+      - description: insert Social Media ID
+        in: path
+        name: social_id
+        required: true
+        type: string
+      - description: Social Media Update request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.SocialMediaUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      security:
+      - Bearer: []
+      summary: Update Social Media Account
+      tags:
+      - Social Media
+  /mygram/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 'Sign in MyGram User to access all feature. NOTE : to input access
+        token to Authorize button, please write with format: bearer YourTokenAccess
+        || Token will be expired in 1 hours'
+      parameters:
+      - description: User Login Request is required
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      summary: Login User
+      tags:
+      - User
+  /mygram/user/register:
+    post:
+      consumes:
+      - application/json
+      description: Register MyGram User
+      parameters:
+      - description: minimum age to register is 8 years old. || password minimum is
+          6 character.
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.FailedResponse'
+      summary: Register User
+      tags:
+      - User
+produces:
+- application/json
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
