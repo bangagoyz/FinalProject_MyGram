@@ -43,6 +43,7 @@ func StartApp(router *gin.Engine, db *gorm.DB) {
 	SocialMediaService := service.NewSocialMediaService(SocialMediaRepository)
 	SocialMediaController := controller.NewSocialMediaController(*SocialMediaService)
 
+	router.GET("", controller.HomeController)
 	base := router.Group("/mygram")
 	{
 		user := base.Group("/user")

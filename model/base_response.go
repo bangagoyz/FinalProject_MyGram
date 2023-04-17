@@ -14,3 +14,10 @@ type FailedResponse struct {
 	Meta  Meta   `json:"meta"`
 	Error string `json:"error"`
 }
+
+type HomeInformationResponse struct {
+	About    string `json:"About"`
+	Name     string `json:"Name"`
+	Github   string `json:"Github"`
+	LinkedIn string `json:"LinkedIn"`
+}
